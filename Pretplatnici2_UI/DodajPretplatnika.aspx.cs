@@ -12,8 +12,9 @@ namespace Pretplatnici2_UI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack) { 
             NapuniSS();
+            }
         }
 
             private void NapuniSS()
@@ -40,7 +41,7 @@ namespace Pretplatnici2_UI
                 p.KorisnickoIme = txtKorisnickoIme.Text;
                 p.Lozinka = txtLozinka.Text;
                 p.Email = txtEmail.Text;
-                p.StrucnaSpremaID = Convert.ToInt16(ddlStrucneSpreme.SelectedValue);
+                p.StrucnaSpremaID = Convert.ToInt16(ddlStrucneSpreme.SelectedValue.ToString());
 
                 Pretplatnici2_DAL.Service_DA.InsertPretplatnik(p);
         }
