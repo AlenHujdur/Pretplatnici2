@@ -30,13 +30,13 @@ namespace Pretplatnici2_DAL
         public virtual DbSet<Pretplatnici> Pretplatnici { get; set; }
         public virtual DbSet<StrucnaSprema> StrucnaSprema { get; set; }
     
-        public virtual ObjectResult<usp_KorisniciSelectById_Result> usp_KorisniciSelectById(Nullable<int> pretplatnikID)
+        public virtual ObjectResult<Pretplatnici_Rezultat> usp_KorisniciSelectById(Nullable<int> pretplatnikID)
         {
             var pretplatnikIDParameter = pretplatnikID.HasValue ?
                 new ObjectParameter("PretplatnikID", pretplatnikID) :
                 new ObjectParameter("PretplatnikID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_KorisniciSelectById_Result>("usp_KorisniciSelectById", pretplatnikIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pretplatnici_Rezultat>("usp_KorisniciSelectById", pretplatnikIDParameter);
         }
     
         public virtual int usp_PretplatniciInsert(string ime, string prezime, string email, string lozinka, string korisnickoIme, Nullable<bool> aktivan, Nullable<int> strucnaSpremaID, byte[] slika, byte[] cv)
@@ -80,7 +80,7 @@ namespace Pretplatnici2_DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_PretplatniciInsert", imeParameter, prezimeParameter, emailParameter, lozinkaParameter, korisnickoImeParameter, aktivanParameter, strucnaSpremaIDParameter, slikaParameter, cvParameter);
         }
     
-        public virtual ObjectResult<usp_PretplatniciSlelectByKorisnickoImeLozinka_Result> usp_PretplatniciSlelectByKorisnickoImeLozinka(string korisnickoIme, string lozinka)
+        public virtual ObjectResult<Pretplatnici_Rezultat> usp_PretplatniciSlelectByKorisnickoImeLozinka(string korisnickoIme, string lozinka)
         {
             var korisnickoImeParameter = korisnickoIme != null ?
                 new ObjectParameter("KorisnickoIme", korisnickoIme) :
@@ -90,7 +90,7 @@ namespace Pretplatnici2_DAL
                 new ObjectParameter("Lozinka", lozinka) :
                 new ObjectParameter("Lozinka", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_PretplatniciSlelectByKorisnickoImeLozinka_Result>("usp_PretplatniciSlelectByKorisnickoImeLozinka", korisnickoImeParameter, lozinkaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pretplatnici_Rezultat>("usp_PretplatniciSlelectByKorisnickoImeLozinka", korisnickoImeParameter, lozinkaParameter);
         }
     
         public virtual ObjectResult<StrucnaSprema> usp_StrucneSpremeSelectAll()
@@ -101,6 +101,15 @@ namespace Pretplatnici2_DAL
         public virtual ObjectResult<StrucnaSprema> usp_StrucneSpremeSelectAll(MergeOption mergeOption)
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StrucnaSprema>("usp_StrucneSpremeSelectAll", mergeOption);
+        }
+    
+        public virtual ObjectResult<Pretplatnici_Rezultat> usp_PretplatniciSlelectByName(string ime)
+        {
+            var imeParameter = ime != null ?
+                new ObjectParameter("Ime", ime) :
+                new ObjectParameter("Ime", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pretplatnici_Rezultat>("usp_PretplatniciSlelectByName", imeParameter);
         }
     }
 }

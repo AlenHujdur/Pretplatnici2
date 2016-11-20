@@ -69,15 +69,12 @@
     <Compile Include="Pretplatnici.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pretplatnici_Rezultat.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Service_DA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrucnaSprema.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="usp_KorisniciSelectById_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="usp_PretplatniciSlelectByKorisnickoImeLozinka_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>

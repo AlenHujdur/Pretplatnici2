@@ -24,5 +24,13 @@ namespace Pretplatnici2_DAL
                 return dm.usp_StrucneSpremeSelectAll().ToList();
             }
         }
+
+        public static List<Pretplatnici_Rezultat> PreuzmiPretplatnika(string Ime)
+        {
+            using (PretplatniciEntities dm = new PretplatniciEntities())
+            {
+                return dm.usp_PretplatniciSlelectByName(Ime).ToList();
+            }
+        }
     }
 }

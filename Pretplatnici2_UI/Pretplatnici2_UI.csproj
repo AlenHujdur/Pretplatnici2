@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DodajPretplatnika.aspx" />
+    <Content Include="PretplatniciPretraga.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +117,13 @@
     </Compile>
     <Compile Include="DodajPretplatnika.aspx.designer.cs">
       <DependentUpon>DodajPretplatnika.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PretplatniciPretraga.aspx.cs">
+      <DependentUpon>PretplatniciPretraga.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PretplatniciPretraga.aspx.designer.cs">
+      <DependentUpon>PretplatniciPretraga.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

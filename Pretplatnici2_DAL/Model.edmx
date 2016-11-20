@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PretplatniciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PretplatniciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Pretplatnici">
           <Key>
             <PropertyRef Name="PredplatnikID" />
@@ -58,6 +58,9 @@
           <Parameter Name="KorisnickoIme" Type="nvarchar" Mode="In" />
           <Parameter Name="Lozinka" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="usp_PretplatniciSlelectByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Ime" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="usp_StrucneSpremeSelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="PretplatniciModelStoreContainer">
           <EntitySet Name="Pretplatnici" EntityType="Self.Pretplatnici" Schema="dbo" store:Type="Tables" />
@@ -67,8 +70,7 @@
             <End Role="Pretplatnici" EntitySet="Pretplatnici" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PretplatniciModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -116,8 +118,8 @@
             <End Role="StrucnaSprema" EntitySet="StrucnaSprema" />
             <End Role="Pretplatnici" EntitySet="Pretplatnici" />
           </AssociationSet>
-          <FunctionImport Name="usp_KorisniciSelectById" ReturnType="Collection(PretplatniciModel.usp_KorisniciSelectById_Result)">
-            <Parameter Name="PretplatnikID" Mode="In" Type="Int32" />
+          <FunctionImport Name="usp_KorisniciSelectById" ReturnType="Collection(PretplatniciModel.Pretplatnici_Rezultat)">
+          <Parameter Name="PretplatnikID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="usp_PretplatniciInsert">
             <Parameter Name="Ime" Mode="In" Type="String" />
@@ -130,24 +132,16 @@
             <Parameter Name="Slika" Mode="In" Type="Binary" />
             <Parameter Name="Cv" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="usp_PretplatniciSlelectByKorisnickoImeLozinka" ReturnType="Collection(PretplatniciModel.usp_PretplatniciSlelectByKorisnickoImeLozinka_Result)">
+          <FunctionImport Name="usp_PretplatniciSlelectByKorisnickoImeLozinka" ReturnType="Collection(PretplatniciModel.Pretplatnici_Rezultat)">
             <Parameter Name="KorisnickoIme" Mode="In" Type="String" />
             <Parameter Name="Lozinka" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_StrucneSpremeSelectAll" EntitySet="StrucnaSprema" ReturnType="Collection(PretplatniciModel.StrucnaSprema)" />
+          <FunctionImport Name="usp_PretplatniciSlelectByName" ReturnType="Collection(PretplatniciModel.Pretplatnici_Rezultat)">
+            <Parameter Name="Ime" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="usp_KorisniciSelectById_Result">
-          <Property Type="Int32" Name="PredplatnikID" Nullable="false" />
-          <Property Type="String" Name="Ime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Prezime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="KorisnickoIme" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Lozinka" Nullable="false" MaxLength="100" />
-          <Property Type="Boolean" Name="Aktivan" Nullable="true" />
-          <Property Type="String" Name="Naziv" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="Skracenica" Nullable="false" MaxLength="4" />
-        </ComplexType>
-        <ComplexType Name="usp_PretplatniciSlelectByKorisnickoImeLozinka_Result">
+        <ComplexType Name="Pretplatnici_Rezultat">
           <Property Type="Int32" Name="PredplatnikID" Nullable="false" />
           <Property Type="String" Name="Ime" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Prezime" Nullable="false" MaxLength="50" />
@@ -190,8 +184,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_KorisniciSelectById" FunctionName="PretplatniciModel.Store.usp_KorisniciSelectById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="PretplatniciModel.usp_KorisniciSelectById_Result">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="PretplatniciModel.Pretplatnici_Rezultat">
                 <ScalarProperty Name="PredplatnikID" ColumnName="PredplatnikID" />
                 <ScalarProperty Name="Ime" ColumnName="Ime" />
                 <ScalarProperty Name="Prezime" ColumnName="Prezime" />
@@ -207,7 +201,7 @@
           <FunctionImportMapping FunctionImportName="usp_PretplatniciInsert" FunctionName="PretplatniciModel.Store.usp_PretplatniciInsert" />
           <FunctionImportMapping FunctionImportName="usp_PretplatniciSlelectByKorisnickoImeLozinka" FunctionName="PretplatniciModel.Store.usp_PretplatniciSlelectByKorisnickoImeLozinka">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="PretplatniciModel.usp_PretplatniciSlelectByKorisnickoImeLozinka_Result">
+              <ComplexTypeMapping TypeName="PretplatniciModel.Pretplatnici_Rezultat">
                 <ScalarProperty Name="PredplatnikID" ColumnName="PredplatnikID" />
                 <ScalarProperty Name="Ime" ColumnName="Ime" />
                 <ScalarProperty Name="Prezime" ColumnName="Prezime" />
@@ -221,6 +215,21 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="usp_StrucneSpremeSelectAll" FunctionName="PretplatniciModel.Store.usp_StrucneSpremeSelectAll">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_PretplatniciSlelectByName" FunctionName="PretplatniciModel.Store.usp_PretplatniciSlelectByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PretplatniciModel.Pretplatnici_Rezultat">
+                <ScalarProperty Name="PredplatnikID" ColumnName="PredplatnikID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="KorisnickoIme" ColumnName="KorisnickoIme" />
+                <ScalarProperty Name="Lozinka" ColumnName="Lozinka" />
+                <ScalarProperty Name="Aktivan" ColumnName="Aktivan" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Skracenica" ColumnName="Skracenica" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

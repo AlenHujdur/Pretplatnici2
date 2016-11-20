@@ -11,7 +11,7 @@ namespace Pretplatnici2_DAL
 {
     using System;
     
-    public partial class usp_PretplatniciSlelectByKorisnickoImeLozinka_Result
+    public partial class Pretplatnici_Rezultat
     {
         public int PredplatnikID { get; set; }
         public string Ime { get; set; }
